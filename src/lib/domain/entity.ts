@@ -1,6 +1,6 @@
 export class Board {
     constructor(
-        readonly board: string[5][5]
+        readonly board: number[][]
     ){}
 }
 
