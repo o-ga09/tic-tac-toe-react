@@ -11,13 +11,19 @@ describe("ユースケースのテスト", () => {
         when(displayMock).calledWith().mockReturnValueOnce(null);
         const usecase = new GameUseCase(outputport);
 
-        const arg = [   [0,0,0,0,0], 
+        const arg1 = [   [0,0,0,0,0], 
                         [0,0,0,0,0],
                         [0,0,0,0,0],
                         [0,0,0,0,0],
                         [0,0,0,0,0]
                     ];
-        const actual = usecase.input(1,1,arg);
+        const arg2 = [ 'white','white','white','white','white',
+                        'white','white','white','white','white',
+                        'white','white','white','white','white',
+                        'white','white','white','white','white',
+                        'white','white','white','white','white',
+                    ];
+        const actual = usecase.input(1,1,arg1,arg2);
         const expected = new Koma(1,0,1);
         expect(actual).toEqual(expected);
     });
@@ -29,14 +35,8 @@ describe("ユースケースのテスト", () => {
         when(displayMock).calledWith().mockReturnValueOnce(null);
 
         const usecase = new GameUseCase(outputport);
-        const actual = usecase.init();
-        const expected = [ [0,0,0,0,0], 
-                           [0,0,0,0,0],
-                           [0,0,0,0,0],
-                           [0,0,0,0,0],
-                           [0,0,0,0,0]
-                        ];
-        expect(actual.board).toEqual(expected);
+        usecase.init();
+        expect(displayMock).toBeCalledTimes(1);
     });
 
     test("任意の縦一列が揃ったかを判定する",() => {
@@ -46,13 +46,19 @@ describe("ユースケースのテスト", () => {
         when(displayMock).calledWith().mockReturnValueOnce(null);
         const usecase = new GameUseCase(outputport);
 
-        const arg = [   [1,0,0,0,0], 
+        const arg1 = [   [1,0,0,0,0], 
                         [1,0,0,0,0],
                         [1,0,0,0,0],
                         [1,0,0,0,0],
                         [1,0,0,0,0]       
                     ];
-        const board = new Board(arg);
+        const arg2 = [ 'white','white','white','white','white',
+                        'white','white','white','white','white',
+                        'white','white','white','white','white',
+                        'white','white','white','white','white',
+                        'white','white','white','white','white',
+                    ];
+        const board = new Board(arg1,arg2);
         const actual = usecase.checkVertical(board);
         const expected = true;
         expect(actual).toEqual(expected);
@@ -65,13 +71,19 @@ describe("ユースケースのテスト", () => {
         when(displayMock).calledWith().mockReturnValueOnce(null);
         const usecase = new GameUseCase(outputport);
 
-        const arg = [   [1,1,1,1,1], 
+        const arg1 = [   [1,1,1,1,1], 
                         [0,0,0,0,0],
                         [0,0,0,0,0],
                         [0,0,0,0,0],
                         [0,0,0,0,0]       
                     ];
-        const board = new Board(arg);
+        const arg2 = [ 'white','white','white','white','white',
+                        'white','white','white','white','white',
+                        'white','white','white','white','white',
+                        'white','white','white','white','white',
+                        'white','white','white','white','white',
+                    ];
+        const board = new Board(arg1,arg2);
         const actual = usecase.checkHorizon(board);
         const expected = true;
         expect(actual).toEqual(expected);
@@ -84,13 +96,19 @@ describe("ユースケースのテスト", () => {
         when(displayMock).calledWith().mockReturnValueOnce(null);
         const usecase = new GameUseCase(outputport);
 
-        const arg = [   [1,0,0,0,0], 
+        const arg1 = [   [1,0,0,0,0], 
                         [0,1,0,0,0],
                         [0,0,1,0,0],
                         [0,0,0,1,0],
                         [0,0,0,0,1]       
                     ];
-        const board = new Board(arg);
+        const arg2 = [ 'white','white','white','white','white',
+                        'white','white','white','white','white',
+                        'white','white','white','white','white',
+                        'white','white','white','white','white',
+                        'white','white','white','white','white',
+                    ];
+        const board = new Board(arg1,arg2);
         const actual = usecase.checkCross(board);
         const expected = true;
         expect(actual).toEqual(expected);
@@ -121,13 +139,19 @@ describe("ユースケースのテスト", () => {
         when(displayMock).calledWith().mockReturnValueOnce(null);
         const usecase = new GameUseCase(outputport);
 
-        const arg = [   [1,1,1,1,1], 
+        const arg1 = [   [1,1,1,1,1], 
                         [1,1,1,1,1],
                         [1,1,1,1,1],
                         [1,1,1,1,1],
                         [1,1,1,1,1]       
                     ];
-        const board = new Board(arg);
+        const arg2 = [ 'white','white','white','white','white',
+                        'white','white','white','white','white',
+                        'white','white','white','white','white',
+                        'white','white','white','white','white',
+                        'white','white','white','white','white',
+                    ];
+        const board = new Board(arg1,arg2);
         const koma = new Koma(1,1,1);
         const actual = usecase.isEmpty(board,koma);
         const expected = false;

@@ -4,18 +4,22 @@ import { GameOutPutPort } from "./port/outputPort";
 export class GameUseCase {
     constructor(readonly gameoutputport: GameOutPutPort){}
 
-    input(index: number,turn: number, b: number[][]) {
+    input(index: number,turn: number, b: number[][],bi: string[]) {
         const res = this.convert(index);
         const koma = new Koma(turn,res.x,res.y)
-        const board = new Board(b);
-        console.log(board);
+        const board = new Board(b,bi);
 
         if(!this.isEmpty(board,koma)){
             return new Koma(-1,-1,-1);    
         }
 
         b[koma.x][koma.y] = turn;
-        const newboard = new Board(b);
+        if(turn === 1) {
+            bi[index] = 'red.200';
+        } else if(turn === 2) {
+            bi[index] = 'blue.200';
+        }
+        const newboard = new Board(b,bi);
         this.gameoutputport.display(newboard);
 
         return new Koma(1,res.x,res.y);
@@ -23,6 +27,7 @@ export class GameUseCase {
 
     init() {
         const b: number[][] = [] as number[][]; 
+        const bi:string[] = [] as string[];
         
         for (let i = 0; i < 5; i++) {
             b.push([]);
@@ -30,7 +35,12 @@ export class GameUseCase {
                 b[i].push(0);
             }
         }
-        const board = new Board(b);
+
+        for(let i = 0; i < 25; i++){
+            bi[i] = '';
+        }
+        
+        const board = new Board(b,bi);
         this.gameoutputport.display(board);
     }
 
@@ -67,7 +77,8 @@ export class GameUseCase {
     }
 
     isWin(inputBoard: number[][]) {
-        const board = new Board(inputBoard);
+        const bi: string[] = [];
+        const board = new Board(inputBoard,bi);
         if(this.checkVertical(board) || this.checkHorizon(board) || this.checkCross(board)) {
             return true;
         }
